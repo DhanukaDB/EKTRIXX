@@ -24,6 +24,7 @@ function Marquee() {
 /* ============ NAV ============ */
 function Nav({ view, onNav, cartCount, onCart, user, onSignOut }) {
   const [accountOpen, setAccountOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
   // Close dropdown when clicking outside
@@ -44,6 +45,13 @@ function Nav({ view, onNav, cartCount, onCart, user, onSignOut }) {
   return (
     <header className="nav">
       <div className="nav__inner">
+        {/* Mobile menu toggle (visible only on mobile) */}
+        <div className="nav__mobile-toggle">
+          <button className="nav__icon-btn" title="Menu" onClick={() => setMobileMenuOpen(true)}>
+            <I.Menu />
+          </button>
+        </div>
+
         <nav className="nav__links">
           {links.map(([label, v]) => (
             <a key={label} className={"nav__link " + (view === v ? "is-active" : "")}
@@ -60,9 +68,9 @@ function Nav({ view, onNav, cartCount, onCart, user, onSignOut }) {
           {/* Account / User button */}
           <div className="nav__account-wrap" ref={menuRef}>
             <button
-              className={"nav__icon-btn nav__account-btn" + (user ? " is-signed-in" : "")}
-              title={user ? user.name : "Account"}
-              onClick={() => user ? setAccountOpen(o => !o) : onNav("societa")}
+               className={"nav__icon-btn nav__account-btn" + (user ? " is-signed-in" : "")}
+               title={user ? user.name : "Account"}
+               onClick={() => user ? setAccountOpen(o => !o) : onNav("societa")}
             >
               {user ? (
                 user.picture
@@ -102,6 +110,47 @@ function Nav({ view, onNav, cartCount, onCart, user, onSignOut }) {
           </button>
         </div>
       </div>
+
+      {/* Mobile Menu Drawer */}
+      <div className={"nav__mobile-scrim " + (mobileMenuOpen ? "is-open" : "")} onClick={() => setMobileMenuOpen(false)} />
+      <aside className={"nav__mobile-drawer " + (mobileMenuOpen ? "is-open" : "")}>
+        <div className="nav__mobile-drawer-head">
+          <div className="nav__mobile-drawer-title">EKTRIXX</div>
+          <button className="nav__mobile-drawer-close" onClick={() => setMobileMenuOpen(false)}>
+            <I.X />
+          </button>
+        </div>
+        <div className="nav__mobile-drawer-links">
+          {links.map(([label, v]) => (
+            <a key={label} className={"nav__mobile-drawer-link " + (view === v ? "is-active" : "")}
+               onClick={() => { setMobileMenuOpen(false); onNav(v); }}>
+              {label}
+            </a>
+          ))}
+          <div className="nav__mobile-drawer-divider" />
+          {user ? (
+            <div className="nav__mobile-drawer-user">
+              <div className="nav__mobile-drawer-user-info">
+                {user.picture && <img className="nav__mobile-drawer-avatar" src={user.picture} alt={user.given_name} />}
+                <div>
+                  <div className="nav__mobile-drawer-name">{user.name}</div>
+                  <div className="nav__mobile-drawer-email">{user.email}</div>
+                </div>
+              </div>
+              <button className="btn btn--ghost btn--block" style={{ marginTop: 12 }} onClick={() => { setMobileMenuOpen(false); onNav("societa"); }}>
+                ◉ Go to Dashboard
+              </button>
+              <button className="btn btn--ghost btn--block nav__menu-item--danger" style={{ marginTop: 8 }} onClick={() => { setMobileMenuOpen(false); onSignOut(); }}>
+                ✕ Sign Out
+              </button>
+            </div>
+          ) : (
+            <button className="btn btn--primary btn--block" style={{ marginTop: 16 }} onClick={() => { setMobileMenuOpen(false); onNav("societa"); }}>
+              Enter the Società <I.Arrow />
+            </button>
+          )}
+        </div>
+      </aside>
     </header>
   );
 }

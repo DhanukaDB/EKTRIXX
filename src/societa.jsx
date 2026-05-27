@@ -119,8 +119,8 @@ function Societa({ user, onSignIn, onSignOut }) {
             </div>
           </div>
 
-          <div style={{ marginTop: 16, padding: "22px", border: "1px solid var(--accent)", background: "linear-gradient(135deg, rgba(255,106,0,0.10), transparent)" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div className="dash__promo">
+            <div className="dash__promo-inner">
               <div>
                 <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 11, letterSpacing: "0.24em", color: "var(--accent)", textTransform: "uppercase" }}>◉ SECRET DROP ACCESS</div>
                 <div style={{ fontFamily: "'Archivo Black'", fontSize: 24, marginTop: 8, textTransform: "uppercase", letterSpacing: "-0.01em" }}>Archive Re-Issue: Soul 02 Returns.</div>

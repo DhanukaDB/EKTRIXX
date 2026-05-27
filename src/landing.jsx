@@ -45,9 +45,9 @@ function Hero({ onShop }) {
             </div>
           </div>
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "end", marginTop: 32 }}>
+        <div className="hero__stats-row">
           <div>
-            <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 11, letterSpacing: "0.24em", color: "var(--fg-mute)", textTransform: "uppercase", marginBottom: 12 }}>
+            <div className="hero__countdown-title">
               ◉ Drop 04 unlocks in
             </div>
             <div className="countdown">
@@ -57,7 +57,7 @@ function Hero({ onShop }) {
               <div className="countdown__cell"><div className="countdown__num">{pad(t.s)}</div><div className="countdown__label">Sec</div></div>
             </div>
           </div>
-          <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 10, letterSpacing: "0.24em", color: "var(--fg-mute)", textAlign: "right", textTransform: "uppercase" }}>
+          <div className="hero__stats-meta">
             <div>SS25 / CHAPTER III</div>
             <div style={{ marginTop: 6, color: "var(--accent)" }}>07 LOOKS · 19 SKUs</div>
           </div>
