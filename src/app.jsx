@@ -6,6 +6,7 @@ function App() {
   const [cart, setCart] = React.useState([]);
   const [cartOpen, setCartOpen] = React.useState(false);
   const [toast, setToast] = React.useState(null);
+  const [user, setUser] = React.useState(null);
 
   // ---- Tweaks ----
   const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -21,16 +22,36 @@ function App() {
     document.body.setAttribute("data-grain", t.grain ? "on" : "off");
   }, [t.accent, t.grain]);
 
-  // restore cart from localStorage
+  // restore cart + user from localStorage
   React.useEffect(() => {
     try {
       const stored = localStorage.getItem("ek_cart");
       if (stored) setCart(JSON.parse(stored));
     } catch {}
+    try {
+      const storedUser = localStorage.getItem("ek_user");
+      if (storedUser) setUser(JSON.parse(storedUser));
+    } catch {}
   }, []);
   React.useEffect(() => {
     localStorage.setItem("ek_cart", JSON.stringify(cart));
   }, [cart]);
+  React.useEffect(() => {
+    if (user) localStorage.setItem("ek_user", JSON.stringify(user));
+    else localStorage.removeItem("ek_user");
+  }, [user]);
+
+  const onSignIn = (userData) => {
+    setUser(userData);
+    setView("societa");
+    showToast(`Welcome, ${userData.given_name || userData.name}.`);
+  };
+
+  const onSignOut = () => {
+    signOutGoogle();
+    setUser(null);
+    showToast("Signed out. See you next drop.");
+  };
 
   // toast helper
   const showToast = (m) => {
@@ -91,12 +112,12 @@ function App() {
   if (view === "landing")      viewEl = <Landing onNav={onNav} />;
   else if (view === "archive") viewEl = <Archive onOpenProduct={onOpenProduct} onQuickAdd={onQuickAdd} />;
   else if (view === "pdp")     viewEl = <PDP productId={productId} onNav={onNav} onAddToCart={onAddToCart} />;
-  else if (view === "societa") viewEl = <Societa />;
+  else if (view === "societa") viewEl = <Societa user={user} onSignIn={onSignIn} onSignOut={onSignOut} />;
 
   return (
     <div className="app" data-screen-label={view === "landing" ? "Landing" : view === "archive" ? "Archive" : view === "pdp" ? "PDP" : "Società"}>
       <Marquee />
-      <Nav view={view === "pdp" ? "archive" : view} onNav={onNav} cartCount={cartCount} onCart={() => setCartOpen(true)} />
+      <Nav view={view === "pdp" ? "archive" : view} onNav={onNav} cartCount={cartCount} onCart={() => setCartOpen(true)} user={user} onSignOut={onSignOut} />
       <main className="viewport">{viewEl}</main>
       <Footer />
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} items={cart} onUpdate={onUpdate} onRemove={onRemove} />

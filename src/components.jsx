@@ -22,13 +22,25 @@ function Marquee() {
 }
 
 /* ============ NAV ============ */
-function Nav({ view, onNav, cartCount, onCart }) {
+function Nav({ view, onNav, cartCount, onCart, user, onSignOut }) {
+  const [accountOpen, setAccountOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    if (!accountOpen) return;
+    const handler = (e) => { if (menuRef.current && !menuRef.current.contains(e.target)) setAccountOpen(false); };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [accountOpen]);
+
   const links = [
     ["Drops", "landing"],
     ["Archive", "archive"],
     ["Performance", "archive"],
     ["Società", "societa"],
   ];
+
   return (
     <header className="nav">
       <div className="nav__inner">
@@ -44,7 +56,46 @@ function Nav({ view, onNav, cartCount, onCart }) {
         </div>
         <div className="nav__right">
           <button className="nav__icon-btn" title="Search"><I.Search /></button>
-          <button className="nav__icon-btn" title="Account" onClick={() => onNav("societa")}><I.User /></button>
+
+          {/* Account / User button */}
+          <div className="nav__account-wrap" ref={menuRef}>
+            <button
+              className={"nav__icon-btn nav__account-btn" + (user ? " is-signed-in" : "")}
+              title={user ? user.name : "Account"}
+              onClick={() => user ? setAccountOpen(o => !o) : onNav("societa")}
+            >
+              {user ? (
+                user.picture
+                  ? <img className="nav__user-avatar" src={user.picture} alt={user.given_name} referrerPolicy="no-referrer" />
+                  : <div className="nav__user-initials">{(user.given_name || user.name || "?")[0].toUpperCase()}</div>
+              ) : (
+                <I.User />
+              )}
+            </button>
+
+            {user && accountOpen && (
+              <div className="nav__account-menu fade-in">
+                <div className="nav__account-menu-user">
+                  {user.picture
+                    ? <img className="nav__menu-avatar" src={user.picture} alt={user.given_name} referrerPolicy="no-referrer" />
+                    : <div className="nav__menu-initials">{(user.given_name || user.name || "?")[0].toUpperCase()}</div>
+                  }
+                  <div>
+                    <div className="nav__menu-name">{user.name}</div>
+                    <div className="nav__menu-email">{user.email}</div>
+                  </div>
+                </div>
+                <div className="nav__account-menu-divider" />
+                <button className="nav__menu-item" onClick={() => { setAccountOpen(false); onNav("societa"); }}>
+                  ◉ &nbsp;My Società
+                </button>
+                <button className="nav__menu-item nav__menu-item--danger" onClick={() => { setAccountOpen(false); onSignOut(); }}>
+                  ✕ &nbsp;Sign Out
+                </button>
+              </div>
+            )}
+          </div>
+
           <button className="nav__icon-btn" title="Bag" onClick={onCart}>
             <I.Bag />
             {cartCount > 0 && <span className="nav__cart-count">{cartCount}</span>}

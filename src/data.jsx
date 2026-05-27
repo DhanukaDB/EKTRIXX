@@ -15,32 +15,11 @@ const PRODUCTS = [
     flags: ["Puff Print", "260 GSM"],
     colors: [
       { name: "Bitumen Black", hex: "#0a0a0a", img: "assets/product-soul07-black.png" },
-      { name: "Bone White",    hex: "#f1ede2", img: "assets/product-soul07-white.png" },
+      { name: "Bone White", hex: "#f1ede2", img: "assets/product-soul07-white.png" },
     ],
     sizes: [
       { s: "XS", stock: 8 }, { s: "S", stock: 12 }, { s: "M", stock: 3 },
       { s: "L", stock: 14 }, { s: "XL", stock: 0 }, { s: "XXL", stock: 6 }, { s: "3XL", stock: 2 },
-    ],
-    drop: "Drop 03 / Archive",
-    fabric: { gsm: "260 GSM", composition: "100% Heavyweight Combed Cotton", finish: "Garment-dyed, soft-hand", origin: "Cut & sewn in Sri Lanka", care: "Cold wash inside out · Hang dry · Do not iron print" },
-  },
-  {
-    id: "soul-07-white",
-    name: "Soul 07 — Bone",
-    sku: "EK-T07-WHT",
-    category: "Tees",
-    fit: "Oversized",
-    price: 8900,
-    primary: "assets/product-soul07-white.png",
-    alt: "assets/product-soul07-black.png",
-    flags: ["Puff Print", "260 GSM"],
-    colors: [
-      { name: "Bone White", hex: "#f1ede2", img: "assets/product-soul07-white.png" },
-      { name: "Bitumen Black", hex: "#0a0a0a", img: "assets/product-soul07-black.png" },
-    ],
-    sizes: [
-      { s: "XS", stock: 4 }, { s: "S", stock: 9 }, { s: "M", stock: 0 },
-      { s: "L", stock: 11 }, { s: "XL", stock: 2 }, { s: "XXL", stock: 0 }, { s: "3XL", stock: 4 },
     ],
     drop: "Drop 03 / Archive",
     fabric: { gsm: "260 GSM", composition: "100% Heavyweight Combed Cotton", finish: "Garment-dyed, soft-hand", origin: "Cut & sewn in Sri Lanka", care: "Cold wash inside out · Hang dry · Do not iron print" },
@@ -52,11 +31,11 @@ const PRODUCTS = [
     category: "Tees",
     fit: "Oversized",
     price: 8500,
-    primary: "assets/hero-orange-tee.png",
-    alt: "assets/hero-orange-tee.png",
+    primary: "assets/ek sample black1.png",
+    alt: "assets/ek sample white1.png",
     flags: ["High-Density", "Wordmark"],
     colors: [
-      { name: "Asphalt", hex: "#0d0d0d", img: "assets/hero-orange-tee.png" },
+      { name: "Asphalt", hex: "#0d0d0d", img: "ek sample black1.png" },
     ],
     sizes: [
       { s: "XS", stock: 0 }, { s: "S", stock: 5 }, { s: "M", stock: 1 },
@@ -64,6 +43,27 @@ const PRODUCTS = [
     ],
     drop: "Drop 03 / Archive",
     fabric: { gsm: "240 GSM", composition: "100% Cotton", finish: "Enzyme washed", origin: "Sri Lanka", care: "Cold wash · Tumble low" },
+  },
+  {
+    id: "soul-07-white",
+    name: "Demon — Bone",
+    sku: "EK-T07-WHT",
+    category: "Tees",
+    fit: "Oversized",
+    price: 8900,
+    primary: "assets/ek sample white.png",
+    alt: "assets/ek sample black.png",
+    flags: ["Puff Print", "260 GSM"],
+    colors: [
+      { name: "Bone White", hex: "#f1ede2", img: "assets/ek sample white.png" },
+      { name: "Bitumen Black", hex: "#0a0a0a", img: "assets/ek sample black.png" },
+    ],
+    sizes: [
+      { s: "XS", stock: 4 }, { s: "S", stock: 9 }, { s: "M", stock: 0 },
+      { s: "L", stock: 11 }, { s: "XL", stock: 2 }, { s: "XXL", stock: 0 }, { s: "3XL", stock: 4 },
+    ],
+    drop: "Drop 03 / Archive",
+    fabric: { gsm: "260 GSM", composition: "100% Heavyweight Combed Cotton", finish: "Garment-dyed, soft-hand", origin: "Cut & sewn in Sri Lanka", care: "Cold wash inside out · Hang dry · Do not iron print" },
   },
   {
     id: "core-tee-blk",
@@ -79,7 +79,7 @@ const PRODUCTS = [
       { name: "Onyx", hex: "#0a0a0a", img: "assets/lookbook-couple.jpeg" },
       { name: "Chalk", hex: "#f1ede2", img: "assets/lookbook-couple.jpeg" },
     ],
-    sizes: [{s:"XS",stock:6},{s:"S",stock:14},{s:"M",stock:18},{s:"L",stock:12},{s:"XL",stock:8},{s:"XXL",stock:4},{s:"3XL",stock:2}],
+    sizes: [{ s: "XS", stock: 6 }, { s: "S", stock: 14 }, { s: "M", stock: 18 }, { s: "L", stock: 12 }, { s: "XL", stock: 8 }, { s: "XXL", stock: 4 }, { s: "3XL", stock: 2 }],
     drop: "Core / Permanent",
     fabric: { gsm: "220 GSM", composition: "100% Cotton" },
   },
@@ -95,7 +95,7 @@ const PRODUCTS = [
     placeholder: "CARGO · DOUBLE-KNEE · WAXED COTTON",
     flags: ["Waxed Denim", "Reinforced"],
     colors: [{ name: "Charcoal", hex: "#2a2a2a" }, { name: "Sand", hex: "#b5a98a" }],
-    sizes: [{s:"XS",stock:3},{s:"S",stock:7},{s:"M",stock:0},{s:"L",stock:9},{s:"XL",stock:5},{s:"XXL",stock:1},{s:"3XL",stock:0}],
+    sizes: [{ s: "XS", stock: 3 }, { s: "S", stock: 7 }, { s: "M", stock: 0 }, { s: "L", stock: 9 }, { s: "XL", stock: 5 }, { s: "XXL", stock: 1 }, { s: "3XL", stock: 0 }],
     drop: "Drop 03 / Archive",
     fabric: { gsm: "380 GSM Denim", composition: "98% Cotton / 2% Elastane" },
   },
@@ -110,7 +110,7 @@ const PRODUCTS = [
     placeholder: "PERFORMANCE · 4-WAY STRETCH",
     flags: ["Quick-Dry", "Anti-Odor"],
     colors: [{ name: "Reactor", hex: "#00d9ff" }, { name: "Void", hex: "#0a0a0a" }, { name: "Lime", hex: "#c8ff2c" }],
-    sizes: [{s:"XS",stock:9},{s:"S",stock:6},{s:"M",stock:4},{s:"L",stock:11},{s:"XL",stock:2},{s:"XXL",stock:0},{s:"3XL",stock:0}],
+    sizes: [{ s: "XS", stock: 9 }, { s: "S", stock: 6 }, { s: "M", stock: 4 }, { s: "L", stock: 11 }, { s: "XL", stock: 2 }, { s: "XXL", stock: 0 }, { s: "3XL", stock: 0 }],
     drop: "Performance / SS25",
     fabric: { gsm: "180 GSM Tech Knit", composition: "Recycled Polyester / Elastane" },
   },
@@ -125,7 +125,7 @@ const PRODUCTS = [
     placeholder: "CAP · UNSTRUCTURED · 6-PANEL",
     flags: ["Embroidered"],
     colors: [{ name: "Onyx", hex: "#0a0a0a" }, { name: "Bone", hex: "#f1ede2" }, { name: "Safety", hex: "#ff6a00" }],
-    sizes: [{s:"XS",stock:0},{s:"S",stock:0},{s:"M",stock:14},{s:"L",stock:14},{s:"XL",stock:0},{s:"XXL",stock:0},{s:"3XL",stock:0}],
+    sizes: [{ s: "XS", stock: 0 }, { s: "S", stock: 0 }, { s: "M", stock: 14 }, { s: "L", stock: 14 }, { s: "XL", stock: 0 }, { s: "XXL", stock: 0 }, { s: "3XL", stock: 0 }],
     drop: "Core / Permanent",
     fabric: { gsm: "Mid-Weight Twill", composition: "100% Brushed Cotton" },
   },
@@ -141,7 +141,7 @@ const PRODUCTS = [
     placeholder: "BOX SHIRT · CAMP COLLAR",
     flags: ["Heavy Twill"],
     colors: [{ name: "Slate", hex: "#3a3f44" }, { name: "Sand", hex: "#b5a98a" }],
-    sizes: [{s:"XS",stock:5},{s:"S",stock:3},{s:"M",stock:1},{s:"L",stock:0},{s:"XL",stock:7},{s:"XXL",stock:4},{s:"3XL",stock:2}],
+    sizes: [{ s: "XS", stock: 5 }, { s: "S", stock: 3 }, { s: "M", stock: 1 }, { s: "L", stock: 0 }, { s: "XL", stock: 7 }, { s: "XXL", stock: 4 }, { s: "3XL", stock: 2 }],
     drop: "Drop 03 / Archive",
     fabric: { gsm: "290 GSM Twill", composition: "100% Cotton" },
   },
@@ -156,14 +156,14 @@ const PRODUCTS = [
     placeholder: "WASHED TEE · ARCHIVE PRINT",
     flags: ["Washed Denim", "Sun-Faded"],
     colors: [{ name: "Wash Indigo", hex: "#3b4a66" }, { name: "Faded Black", hex: "#222" }],
-    sizes: [{s:"XS",stock:2},{s:"S",stock:0},{s:"M",stock:6},{s:"L",stock:4},{s:"XL",stock:8},{s:"XXL",stock:3},{s:"3XL",stock:0}],
+    sizes: [{ s: "XS", stock: 2 }, { s: "S", stock: 0 }, { s: "M", stock: 6 }, { s: "L", stock: 4 }, { s: "XL", stock: 8 }, { s: "XXL", stock: 3 }, { s: "3XL", stock: 0 }],
     drop: "Retro Archive",
     fabric: { gsm: "240 GSM", composition: "100% Cotton — Stone Washed" },
   },
 ];
 
 const CATEGORIES = ["All", "Tees", "Cargoes", "Performance Tops", "Accessories"];
-const FITS       = ["All Fits", "Oversized", "Athletic", "Boxy/Utility"];
-const SORTS      = ["Newest", "Price ↑", "Price ↓", "Most Wanted"];
+const FITS = ["All Fits", "Oversized", "Athletic", "Boxy/Utility"];
+const SORTS = ["Newest", "Price ↑", "Price ↓", "Most Wanted"];
 
 Object.assign(window, { PRODUCTS, CATEGORIES, FITS, SORTS, fmt });

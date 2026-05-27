@@ -71,8 +71,8 @@ function BrandSynthesizer({ onShop }) {
   const cells = [
     { id: "perf", cat: "01 / Performance", name: "Move", count: "06 STYLES", cls: "synth__cell--lg", img: "assets/ek sample black.png" },
     { id: "utility", cat: "02 / Utility Street", name: "Build", count: "08 STYLES", cls: "synth__cell--md", img: "assets/lookbook-couple.jpeg" },
-    { id: "archive", cat: "03 / Retro Archive", name: "Decay", count: "05 STYLES", cls: "synth__cell--sm", img: "assets/product-soul07-black.png" },
-    { id: "tees", cat: "04 / Heavy Tees", name: "Layer", count: "11 STYLES", cls: "synth__cell--sm", img: "assets/ek sample black.png" },
+    { id: "archive", cat: "03 / Retro Archive", name: "Decay", count: "05 STYLES", cls: "synth__cell--sm", img: "assets/ek sample black1.png" },
+    { id: "tees", cat: "04 / Heavy Tees", name: "Layer", count: "11 STYLES", cls: "synth__cell--sm", img: "assets/ek sample white.png" },
     { id: "acc", cat: "05 / Hardware", name: "Equip", count: "04 STYLES", cls: "synth__cell--sm", img: "assets/product-soul07-white.png" },
   ];
   return (
@@ -122,7 +122,7 @@ function Lookbook({ onShop }) {
   return (
     <section className="lookbook">
       <div className="lookbook__img-wrap">
-        <img className="lookbook__img" src="assets/lookbook-couple.jpeg" alt="EKTRIXX lookbook" />
+        <img className="lookbook__img" src="assets/couple_live_lookbook.png" alt="EKTRIXX lookbook" />
         <div className="lookbook__corners" />
         <div style={{ position: "absolute", top: 18, left: 18, padding: "6px 10px", background: "rgba(10,10,10,0.7)", backdropFilter: "blur(8px)", border: "1px solid var(--line-2)" }}>
           <div style={{ fontFamily: "'JetBrains Mono'", fontSize: 10, letterSpacing: "0.22em", color: "var(--accent)", textTransform: "uppercase" }}>◉ LIVE LOOKBOOK</div>
