@@ -82,8 +82,8 @@ function Archive({ onOpenProduct, onQuickAdd }) {
             <span style={{marginLeft: "auto", color: "var(--fg-mute)"}}>SHOWING {filtered.length} / {PRODUCTS.length}</span>
           </div>
           <div className="pgrid">
-            {filtered.map(p => (
-              <ProductCard key={p.id} product={p} onOpen={onOpenProduct} onQuickAdd={onQuickAdd} />
+            {filtered.map((p, i) => (
+              <ProductCard key={p.id} product={p} onOpen={onOpenProduct} onQuickAdd={onQuickAdd} eagerLoad={i < 4} />
             ))}
           </div>
 

@@ -47,7 +47,7 @@ function Nav({ view, onNav, cartCount, onCart, user, onSignOut }) {
       <div className="nav__inner">
         {/* Mobile menu toggle (visible only on mobile) */}
         <div className="nav__mobile-toggle">
-          <button className="nav__icon-btn" title="Menu" onClick={() => setMobileMenuOpen(true)}>
+          <button type="button" className="nav__icon-btn" aria-label="Open navigation menu" aria-expanded={mobileMenuOpen} onClick={() => setMobileMenuOpen(true)}>
             <I.Menu />
           </button>
         </div>
@@ -113,19 +113,19 @@ function Nav({ view, onNav, cartCount, onCart, user, onSignOut }) {
 
       {/* Mobile Menu Drawer */}
       <div className={"nav__mobile-scrim " + (mobileMenuOpen ? "is-open" : "")} onClick={() => setMobileMenuOpen(false)} />
-      <aside className={"nav__mobile-drawer " + (mobileMenuOpen ? "is-open" : "")}>
+      <aside role="dialog" aria-modal="true" aria-label="Navigation menu" className={"nav__mobile-drawer " + (mobileMenuOpen ? "is-open" : "")}>
         <div className="nav__mobile-drawer-head">
           <div className="nav__mobile-drawer-title">EKTRIXX</div>
-          <button className="nav__mobile-drawer-close" onClick={() => setMobileMenuOpen(false)}>
+          <button type="button" className="nav__mobile-drawer-close" aria-label="Close navigation menu" onClick={() => setMobileMenuOpen(false)}>
             <I.X />
           </button>
         </div>
         <div className="nav__mobile-drawer-links">
           {links.map(([label, v]) => (
-            <a key={label} className={"nav__mobile-drawer-link " + (view === v ? "is-active" : "")}
+            <button type="button" key={label} className={"nav__mobile-drawer-link " + (view === v ? "is-active" : "")}
                onClick={() => { setMobileMenuOpen(false); onNav(v); }}>
               {label}
-            </a>
+            </button>
           ))}
           <div className="nav__mobile-drawer-divider" />
           {user ? (
@@ -137,15 +137,15 @@ function Nav({ view, onNav, cartCount, onCart, user, onSignOut }) {
                   <div className="nav__mobile-drawer-email">{user.email}</div>
                 </div>
               </div>
-              <button className="btn btn--ghost btn--block" style={{ marginTop: 12 }} onClick={() => { setMobileMenuOpen(false); onNav("societa"); }}>
+              <button type="button" className="btn btn--ghost btn--block" style={{ marginTop: 12 }} onClick={() => { setMobileMenuOpen(false); onNav("societa"); }}>
                 ◉ Go to Dashboard
               </button>
-              <button className="btn btn--ghost btn--block nav__menu-item--danger" style={{ marginTop: 8 }} onClick={() => { setMobileMenuOpen(false); onSignOut(); }}>
+              <button type="button" className="btn btn--ghost btn--block nav__menu-item--danger" style={{ marginTop: 8 }} onClick={() => { setMobileMenuOpen(false); onSignOut(); }}>
                 ✕ Sign Out
               </button>
             </div>
           ) : (
-            <button className="btn btn--primary btn--block" style={{ marginTop: 16 }} onClick={() => { setMobileMenuOpen(false); onNav("societa"); }}>
+            <button type="button" className="btn btn--primary btn--block" style={{ marginTop: 16 }} onClick={() => { setMobileMenuOpen(false); onNav("societa"); }}>
               Enter the Società <I.Arrow />
             </button>
           )}
@@ -251,25 +251,43 @@ function CartDrawer({ open, onClose, items, onUpdate, onRemove }) {
                   </div>
                   <div className="citem__price">{fmt(it.price * it.qty)}</div>
                 </div>
-                <button className="citem__remove" onClick={() => onRemove(idx)}>Remove</button>
+                <button type="button" className="citem__remove" onClick={() => onRemove(idx)}>Remove</button>
               </div>
             </div>
           ))}
         </div>
 
         {items.length > 0 && (
-          <div className="cart__foot">
-            <div className="cart__totals">
-              <div className="row"><span>Subtotal</span><span>{fmt(subtotal)}</span></div>
-              <div className="row"><span>Shipping</span><span>{shipping === 0 ? "FREE" : fmt(shipping)}</span></div>
-              <div className="row total"><span>Total</span><span className="v">{fmt(subtotal + shipping)}</span></div>
+          <>
+            <div className="cart__express-pay">
+              <button type="button" className="cart__express-btn cart__express-btn--apple" aria-label="Pay with Apple Pay">
+                <svg width="14" height="17" viewBox="0 0 56 68" fill="#000" style={{marginRight:7,flexShrink:0}}>
+                  <path d="M47.7 14.5c.4-5.1-1.4-10.3-4.8-14C39.5 1 34.4-.7 29.6.1c-.5 4.7 1.6 9.7 5 12.9 3.5 3.4 8.5 5.2 13.1 1.5z"/>
+                  <path d="M28 18.2c-4.8 0-9.3 2.7-12.1 2.7-2.9 0-7.3-2.6-12.1-2.6C-.5 18.3-6.3 22.9-9.5 29.4-16 42.7-11.6 63-4.8 74c3.4 5 7.4 10.6 12.7 10.4 5.1-.2 7.1-3.3 13.3-3.3 6.3 0 8 3.3 13.3 3.2 5.4-.1 8.9-5.2 12.3-10.2 3.8-5.7 5.4-11.2 5.5-11.5-.1-.1-10.7-4.1-10.8-16.2-.1-10.2 8.3-15 8.7-15.3-4.8-7-12.2-7.9-14.2-7.9z" transform="translate(14,0)"/>
+                </svg>
+                <span style={{fontFamily:"system-ui",fontWeight:600,fontSize:13}}>Apple Pay</span>
+              </button>
+              <button type="button" className="cart__express-btn cart__express-btn--google" aria-label="Pay with Google Pay">
+                <span style={{fontFamily:"system-ui",fontSize:13,fontWeight:700}}>
+                  <span style={{color:"#4285f4"}}>G</span><span style={{color:"#ea4335"}}>o</span><span style={{color:"#fbbc05"}}>o</span><span style={{color:"#4285f4"}}>g</span><span style={{color:"#34a853"}}>l</span><span style={{color:"#ea4335"}}>e</span>
+                </span>
+                <span style={{fontFamily:"system-ui",fontWeight:500,fontSize:13,marginLeft:5,color:"#000"}}>Pay</span>
+              </button>
+              <div className="cart__express-divider">— OR —</div>
             </div>
-            <button className="btn btn--primary btn--block btn--lg">Checkout <I.Arrow /></button>
-            <div style={{marginTop: 12, fontFamily: "'JetBrains Mono'", fontSize: 10, letterSpacing: "0.18em", color: "var(--fg-mute)", textAlign: "center", textTransform: "uppercase"}}>
-              <I.Lock style={{verticalAlign: "-2px", marginRight: 6}} />
-              Secure checkout · Koko · Mintpay · Cards
+            <div className="cart__foot">
+              <div className="cart__totals">
+                <div className="row"><span>Subtotal</span><span>{fmt(subtotal)}</span></div>
+                <div className="row"><span>Shipping</span><span>{shipping === 0 ? "FREE" : fmt(shipping)}</span></div>
+                <div className="row total"><span>Total</span><span className="v">{fmt(subtotal + shipping)}</span></div>
+              </div>
+              <button type="button" className="btn btn--primary btn--block btn--lg">Checkout <I.Arrow /></button>
+              <div style={{marginTop: 12, fontFamily: "'JetBrains Mono'", fontSize: 10, letterSpacing: "0.18em", color: "var(--fg-mute)", textAlign: "center", textTransform: "uppercase"}}>
+                <I.Lock style={{verticalAlign: "-2px", marginRight: 6}} />
+                Secure checkout · Koko · Mintpay · Cards
+              </div>
             </div>
-          </div>
+          </>
         )}
       </aside>
     </>
@@ -277,15 +295,15 @@ function CartDrawer({ open, onClose, items, onUpdate, onRemove }) {
 }
 
 /* ============ PRODUCT CARD ============ */
-function ProductCard({ product, onOpen, onQuickAdd }) {
+function ProductCard({ product, onOpen, onQuickAdd, eagerLoad }) {
   const lowest = Math.min(...product.sizes.filter(s => s.stock > 0).map(s => s.stock));
   return (
-    <div className="pcard" onClick={() => onOpen(product.id)}>
+    <button type="button" className="pcard" onClick={() => onOpen(product.id)}>
       <div className="pcard__img">
         {product.primary ? (
           <>
-            <img src={product.primary} alt={product.name} className="primary" />
-            <img src={product.alt || product.primary} alt={product.name + " alt"} className="alt" />
+            <img src={product.primary} alt={product.name} className="primary" loading={eagerLoad ? "eager" : "lazy"} decoding="async" />
+            <img src={product.alt || product.primary} alt={product.name + " alt"} className="alt" loading="lazy" decoding="async" />
           </>
         ) : (
           <div className="ph" style={{position:"absolute",inset:0}}>{product.placeholder || "EKTRIXX"}</div>
@@ -302,9 +320,9 @@ function ProductCard({ product, onOpen, onQuickAdd }) {
           </div>
           <div className="size-row">
             {product.sizes.map(sz => {
-              const cls = sz.stock === 0 ? "is-out" : sz.stock <= 3 ? "is-low" : "";
+              const cls = sz.stock === 0 ? "is-out" : sz.stock === 1 ? "is-last" : sz.stock <= 3 ? "is-low" : "";
               return (
-                <button key={sz.s} className={"size-pill " + cls}
+                <button type="button" key={sz.s} className={"size-pill " + cls}
                   onClick={() => sz.stock > 0 && onQuickAdd(product, sz.s)}>
                   {sz.s}
                 </button>
@@ -312,12 +330,17 @@ function ProductCard({ product, onOpen, onQuickAdd }) {
             })}
           </div>
         </div>
+        {/* Mobile-only tap CTA — hover quick-add is unavailable on touch; opens PDP for size selection */}
+        <button type="button" className="pcard__mobile-atc" aria-label={`Add ${product.name} to bag`}
+          onClick={(e) => { e.stopPropagation(); onOpen(product.id); }}>
+          +
+        </button>
       </div>
       <div className="pcard__info">
         <div>
           <div className="pcard__name">{product.name}</div>
           <div className="pcard__sub">{product.fit} · {product.category}</div>
-          <div className="pcard__swatches">
+          <div className="pcard__swatches" aria-hidden="true">
             {product.colors.map((c, i) => <span key={i} className="swatch" style={{background: c.hex}} title={c.name} />)}
           </div>
         </div>
@@ -326,7 +349,7 @@ function ProductCard({ product, onOpen, onQuickAdd }) {
           {fmt(product.price)}
         </div>
       </div>
-    </div>
+    </button>
   );
 }
 

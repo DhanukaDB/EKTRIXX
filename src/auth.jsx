@@ -65,7 +65,7 @@ function GoogleSignInButton({ onSignIn }) {
     google.accounts.id.renderButton(btnRef.current, {
       theme: "filled_black",
       size: "large",
-      width: Math.min(btnRef.current.getBoundingClientRect().width || 360, 420),
+      width: Math.min(btnRef.current.getBoundingClientRect().width || (window.innerWidth - 64), 420),
       text: "continue_with",
       shape: "square",
       logo_alignment: "left",

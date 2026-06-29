@@ -1,0 +1,7 @@
+{
+  "name": "ektrixx",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "bunx serve . -p 7821"
+  }
+}

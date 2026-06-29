@@ -189,9 +189,9 @@ function Societa({ user, onSignIn, onSignOut }) {
           <div className="signup__auth-divider">
             <span>OR CONTINUE WITH</span>
           </div>
-          <button className="signup__auth-email-btn" onClick={() => {}}>
+          <button type="button" className="signup__auth-email-btn" disabled aria-disabled="true" title="Coming soon">
             <I.User style={{ marginRight: 10 }} />
-            Email &amp; Password
+            Email &amp; Password — Coming Soon
           </button>
           <div className="signup__auth-terms">
             By signing in you agree to our{" "}

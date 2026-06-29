@@ -5,7 +5,18 @@ function PDP({ productId, onNav, onAddToCart }) {
   const [colorIdx, setColorIdx] = React.useState(0);
   const [size, setSize] = React.useState(null);
   const [openAcc, setOpenAcc] = React.useState("fabric");
+  const [sizeGuideOpen, setSizeGuideOpen] = React.useState(false);
+  const [stickyVisible, setStickyVisible] = React.useState(false);
+  const ctaRef = React.useRef(null);
   const color = product.colors[colorIdx];
+
+  // Sticky ATC: show when native CTA scrolls out of view
+  React.useEffect(() => {
+    if (!ctaRef.current) return;
+    const obs = new IntersectionObserver(([entry]) => setStickyVisible(!entry.isIntersecting), { threshold: 0 });
+    obs.observe(ctaRef.current);
+    return () => obs.disconnect();
+  }, []);
   const installments = [
     { n: "1ST · TODAY", v: Math.round(product.price / 3) },
     { n: "30 DAYS",     v: Math.round(product.price / 3) },
@@ -35,7 +46,11 @@ function PDP({ productId, onNav, onAddToCart }) {
   return (
     <section className="pdp fade-in">
       <div className="pdp__crumb">
-        <a onClick={() => onNav("landing")}>Home</a> / <a onClick={() => onNav("archive")}>Archive</a> / <span style={{color:"var(--fg)"}}>{product.name}</span>
+        <a onClick={() => onNav("landing")} style={{padding:"8px 4px",display:"inline-flex",alignItems:"center"}}>Home</a>
+        {" / "}
+        <a onClick={() => onNav("archive")} style={{padding:"8px 4px",display:"inline-flex",alignItems:"center"}}>Archive</a>
+        {" / "}
+        <span style={{color:"var(--fg)"}}>{product.name}</span>
       </div>
 
       <div className="pdp__layout">
@@ -61,6 +76,7 @@ function PDP({ productId, onNav, onAddToCart }) {
               <div className="pdp__save">SAVE {fmt(product.compare - product.price)}</div>
             </>}
           </div>
+          <p className="pdp__returns-note"><I.Refresh size={11} /> Free returns · 14-day exchange</p>
 
           <div className="splitpay">
             <div className="splitpay__head">
@@ -96,32 +112,44 @@ function PDP({ productId, onNav, onAddToCart }) {
           <div className="pdp__group">
             <div className="pdp__group-h">
               <span>SIZE</span>
-              <span className="accent" style={{cursor:"pointer"}}>Size Guide →</span>
+              <button type="button" className="pdp__size-guide-btn" onClick={() => setSizeGuideOpen(true)}>Size Guide →</button>
             </div>
             <div className="size-grid">
               {product.sizes.map(sz => {
-                const cls = sz.stock === 0 ? "is-out" : sz.stock <= 3 ? "is-low" : "";
+                const stockCls = sz.stock === 0 ? "is-out" : sz.stock === 1 ? "is-last" : sz.stock <= 3 ? "is-low" : "";
                 return (
-                  <button key={sz.s} className={"size-pill " + cls + (size === sz.s ? " is-active" : "")}
+                  <button type="button" key={sz.s} className={"size-pill " + stockCls + (size === sz.s ? " is-active" : "")}
                     onClick={() => sz.stock > 0 && setSize(sz.s)}>
                     {sz.s}
                   </button>
                 );
               })}
             </div>
+            <span className="pdp__model-note"><I.User size={11} /> Model is 185cm / 6'1", wearing L</span>
             {size && (() => {
               const sz = product.sizes.find(s => s.s === size);
-              return <div style={{marginTop:10,fontFamily:"'JetBrains Mono'",fontSize:11,letterSpacing:"0.18em",color: sz.stock <= 3 ? "var(--accent)" : "var(--fg-dim)",textTransform:"uppercase"}}>
-                {sz.stock <= 3 ? `◉ ONLY ${sz.stock} LEFT IN ${size}` : `◉ ${sz.stock} IN STOCK · SIZE ${size}`}
+              return <div style={{marginTop:8,fontFamily:"'JetBrains Mono'",fontSize:11,letterSpacing:"0.18em",color: sz.stock <= 3 ? "var(--accent)" : "var(--fg-dim)",textTransform:"uppercase"}}>
+                {sz.stock === 1 ? `◉ LAST ONE IN ${size}` : sz.stock <= 3 ? `◉ ONLY ${sz.stock} LEFT IN ${size}` : `◉ ${sz.stock} IN STOCK · SIZE ${size}`}
               </div>;
             })()}
           </div>
 
-          <div className="pdp__cta">
-            <button className="btn btn--primary btn--lg" onClick={handleAdd} disabled={!size}>
+          <div className="pdp__cta" ref={ctaRef}>
+            <button type="button" className="btn btn--primary btn--lg" onClick={handleAdd} disabled={!size}>
               {size ? `Add to Bag — ${fmt(product.price)}` : "Select size"}
             </button>
-            <button className="btn btn--ghost btn--lg" title="Wishlist"><I.Heart /></button>
+            <button type="button" className="btn btn--ghost btn--lg" title="Wishlist" aria-label="Add to wishlist"><I.Heart /></button>
+          </div>
+
+          {/* Sticky ATC bar — appears when native CTA scrolls off screen */}
+          <div className={"pdp__sticky-atc " + (stickyVisible ? "is-visible" : "")}>
+            <div className="pdp__sticky-atc-info">
+              <span className="pdp__sticky-atc-name">{product.name}</span>
+              <span className="pdp__sticky-atc-meta">{size ? `Size ${size} selected` : "Select a size"}</span>
+            </div>
+            <button type="button" className="btn btn--primary" onClick={handleAdd} disabled={!size}>
+              {size ? "Add to Bag" : "Select Size"}
+            </button>
           </div>
 
           <div className="pdp__shipping">
@@ -164,6 +192,34 @@ function PDP({ productId, onNav, onAddToCart }) {
             )}
           </div>
         </aside>
+      </div>
+
+      {/* Size Guide Bottom Sheet */}
+      <div className={"size-guide-scrim " + (sizeGuideOpen ? "is-open" : "")} onClick={() => setSizeGuideOpen(false)} />
+      <div className={"size-guide-sheet " + (sizeGuideOpen ? "is-open" : "")} role="dialog" aria-modal="true" aria-label="Size guide">
+        <div className="size-guide-sheet__head">
+          <span className="size-guide-sheet__title">Size Guide</span>
+          <button type="button" className="size-guide-sheet__close" aria-label="Close size guide" onClick={() => setSizeGuideOpen(false)}><I.X /></button>
+        </div>
+        <div className="size-guide-sheet__model">◉ &nbsp;Model is 185cm / 6'1", wearing size L</div>
+        <table className="size-guide-table">
+          <thead>
+            <tr><th>Size</th><th>Chest (cm)</th><th>Length (cm)</th><th>Shoulder (cm)</th></tr>
+          </thead>
+          <tbody>
+            {[
+              ["XS", "96–101", "65", "43"],
+              ["S",  "101–106","68", "45"],
+              ["M",  "106–111","71", "47"],
+              ["L",  "111–116","74", "49"],
+              ["XL", "116–121","77", "51"],
+              ["XXL","121–126","80", "53"],
+              ["3XL","126–131","83", "55"],
+            ].map(([sz, chest, len, sh]) => (
+              <tr key={sz}><td>{sz}</td><td>{chest}</td><td>{len}</td><td>{sh}</td></tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </section>
   );
