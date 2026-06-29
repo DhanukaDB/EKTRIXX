@@ -17,3 +17,7 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Google OAuth credentials — never commit
+client_secret*.json
+*credentials*.json
