@@ -1,5 +1,15 @@
 // EKTRIXX — App root: view routing, cart state, tweaks panel
 
+function Preloader({ visible }) {
+  return (
+    <div className={"preloader " + (visible ? "" : "is-hidden")} aria-hidden={!visible}>
+      <div className="preloader__mark"><EKGlyph size={44} color="var(--accent)" /></div>
+      <div className="preloader__bar"><div className="preloader__bar-fill" /></div>
+      <div className="preloader__tag">ATTITUDE IN EVERY FIT</div>
+    </div>
+  );
+}
+
 function App() {
   const [view, setView] = React.useState("landing");
   const [productId, setProductId] = React.useState(null);
@@ -7,6 +17,17 @@ function App() {
   const [cartOpen, setCartOpen] = React.useState(false);
   const [toast, setToast] = React.useState(null);
   const [user, setUser] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+
+  // Loading splash — holds for 2s while brand fonts/scripts settle in
+  React.useEffect(() => {
+    document.body.style.overflow = "hidden";
+    const id = setTimeout(() => {
+      setLoading(false);
+      document.body.style.overflow = "";
+    }, 2000);
+    return () => { clearTimeout(id); document.body.style.overflow = ""; };
+  }, []);
 
   // ---- Tweaks ----
   const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -116,6 +137,7 @@ function App() {
 
   return (
     <div className="app" data-screen-label={view === "landing" ? "Landing" : view === "archive" ? "Archive" : view === "pdp" ? "PDP" : "Società"}>
+      <Preloader visible={loading} />
       <Marquee />
       <Nav view={view === "pdp" ? "archive" : view} onNav={onNav} cartCount={cartCount} onCart={() => setCartOpen(true)} user={user} onSignOut={onSignOut} />
       <main className="viewport">{viewEl}</main>

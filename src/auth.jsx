@@ -8,7 +8,7 @@
 //   4. Authorized JavaScript origins: http://localhost:3000
 //   5. Copy the Client ID and paste it below.
 
-const GOOGLE_CLIENT_ID = "469057102780-3arur8b179c66qp88raa1vqs8ru5jf3f.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "609348947538-tibajmo8otg8m8mk6v3h9nlu59v1l4n6.apps.googleusercontent.com";
 
 const GIS_CONFIGURED = !GOOGLE_CLIENT_ID.startsWith("YOUR_");
 

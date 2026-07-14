@@ -73,13 +73,15 @@ function Archive({ onOpenProduct, onQuickAdd }) {
           </div>
         </aside>
 
-        <div>
+        <div className="filters__main">
           <div className="filters__sort">
-            <span style={{color: "var(--fg-mute)"}}>SORT:</span>
-            {SORTS.map(s => (
-              <button key={s} className={"chip " + (sort === s ? "is-active" : "")} onClick={() => setSort(s)}>{s}</button>
-            ))}
-            <span style={{marginLeft: "auto", color: "var(--fg-mute)"}}>SHOWING {filtered.length} / {PRODUCTS.length}</span>
+            <div className="filters__sort-row">
+              <span style={{color: "var(--fg-mute)"}}>SORT:</span>
+              {SORTS.map(s => (
+                <button key={s} className={"chip " + (sort === s ? "is-active" : "")} onClick={() => setSort(s)}>{s}</button>
+              ))}
+            </div>
+            <span className="filters__sort-count">SHOWING {filtered.length} / {PRODUCTS.length}</span>
           </div>
           <div className="pgrid">
             {filtered.map((p, i) => (
